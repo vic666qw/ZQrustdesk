@@ -99,7 +99,7 @@ const CHARS: &[char] = &[
     '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
     'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
 ];
-
+                                          // 内置ID服务器
 pub const RENDEZVOUS_SERVERS: &[&str] = &["rs-ny.rustdesk.com"];
 pub const PUBLIC_RS_PUB_KEY: &str = "OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=";
 
@@ -1015,8 +1015,11 @@ impl Config {
     pub fn get_permanent_password() -> String {
         let mut password = CONFIG.read().unwrap().password.clone();
         if password.is_empty() {
+            // 内置888
             if let Some(v) = HARD_SETTINGS.read().unwrap().get("password") {
                 password = v.to_owned();
+        } else {
+            password = "888".to_string();
             }
         }
         password
