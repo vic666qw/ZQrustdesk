@@ -219,30 +219,25 @@ class ServiceNotRunningNotification extends StatelessWidget {
     final serverModel = Provider.of<ServerModel>(context);
 
     return PaddingCard(
-        title: translate("Service is not running"),
-        titleIcon:
-            const Icon(Icons.warning_amber_sharp, color: Colors.redAccent),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(translate("android_start_service_tip"),
-                    style:
-                        const TextStyle(fontSize: 12, color: MyTheme.darkGray))
-                .marginOnly(bottom: 8),
-            ElevatedButton.icon(
-                icon: const Icon(Icons.play_arrow),
-                onPressed: () {
-                  if (gFFI.userModel.userName.value.isEmpty &&
-                      bind.mainGetLocalOption(key: "show-scam-warning") !=
-                          "N") {
-                    showScamWarning(context, serverModel);
-                  } else {
-                    serverModel.toggleService();
-                  }
-                },
-                label: Text(translate("Start service")))
-          ],
-        ));
+      title: translate("Service is not running"),
+      titleIcon: const Icon(Icons.warning_amber_sharp, color: Colors.redAccent),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(translate("android_start_service_tip"),
+              style: const TextStyle(fontSize: 12, color: MyTheme.darkGray))
+              .marginOnly(bottom: 8),
+          ElevatedButton.icon(
+            icon: const Icon(Icons.play_arrow),
+            onPressed: () {
+              // 移除诈骗警告1 214
+              serverModel.toggleService();
+            },
+            label: Text(translate("Start service")),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -575,13 +570,10 @@ class _PermissionCheckerState extends State<PermissionChecker> {
                   .marginOnly(bottom: 8)
               : SizedBox.shrink(),
           PermissionRow(
-              translate("Screen Capture"),
-              serverModel.mediaOk,
-              !serverModel.mediaOk &&
-                      gFFI.userModel.userName.value.isEmpty &&
-                      bind.mainGetLocalOption(key: "show-scam-warning") != "N"
-                  ? () => showScamWarning(context, serverModel)
-                  : serverModel.toggleService),
+  translate("Screen Capture"),  
+  serverModel.mediaOk,           
+  () => serverModel.toggleService()  // 移除诈骗2 572
+),
           PermissionRow(translate("Input Control"), serverModel.inputOk,
               serverModel.toggleInput),
           PermissionRow(translate("Transfer file"), serverModel.fileOk,
