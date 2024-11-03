@@ -385,28 +385,33 @@ class ServerModel with ChangeNotifier {
         stopService();
       }
     } else {
-  await checkRequestNotificationPermission();
-  if (bind.mainGetLocalOption(key: kOptionDisableFloatingWindow) != Y) {
-    await checkFloatingWindowPermission();
-  }
-  if (!await AndroidPermissionManager.check(kManageExternalStorage)) {
-    await AndroidPermissionManager.request(kManageExternalStorage);
-  }
-  // 直接启动服务，不再显示对话框
-  startService();
-}
-
-  /// Start the screen sharing service.
-  Future<void> startService() async {
-    _isStart = true;
-    notifyListeners();
-    parent.target?.ffiModel.updateEventListener(parent.target!.sessionId, "");
-    await parent.target?.invokeMethod("init_service");
-    // ugly is here, because for desktop, below is useless
-    await bind.mainStartService();
-    updateClientState();
-    if (isAndroid) {
-      androidUpdatekeepScreenOn();
+      await checkRequestNotificationPermission();
+      if (bind.mainGetLocalOption(key: kOptionDisableFloatingWindow) != 'Y') {
+        await checkFloatingWindowPermission();
+      }
+      if (!await AndroidPermissionManager.check(kManageExternalStorage)) {
+        await AndroidPermissionManager.request(kManageExternalStorage);
+      }
+      final res = await parent.target?.dialogManager
+          .show<bool>((setState, close, context) {
+        submit() => close(true);
+        return CustomAlertDialog(
+          title: Row(children: [
+            const Icon(Icons.warning_amber_sharp,
+                color: Colors.redAccent, size: 28),
+            const SizedBox(width: 10),
+            Text(translate("Warning")),
+          ]),
+          content: Text(translate("android_service_will_start_tip")),
+          actions: [
+            dialogButton("Cancel", onPressed: close, isOutline: true),
+            dialogButton("OK", onPressed: submit),
+          ],
+          onSubmit: submit,
+          onCancel: close,
+        );
+      });
+        startService();
     }
   }
 
