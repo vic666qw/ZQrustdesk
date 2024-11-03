@@ -793,15 +793,17 @@ void showAbout(OverlayDialogManager dialogManager) {
         Text('Version: $version'),
         InkWell(
             onTap: () async {
-              const url = 'http://www.scysdl.com';
+              const url = 'http://www.scysdl.com/';
               if (await canLaunchUrl(Uri.parse(url))) {
                 await launchUrl(Uri.parse(url));
               }
             },
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 8),
-              child: Text('远程控制定制联系微信“Haisong-8',
-                  style: TextStyle),
+              child: Text('远程控制定制联系微信“Haisong-8”',
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                  )),
             )),
       ]),
       actions: [],
