@@ -395,7 +395,6 @@ class ServerModel with ChangeNotifier {
   // 直接启动服务，不再显示对话框
   startService();
 }
-  }
 
   /// Start the screen sharing service.
   Future<void> startService() async {
