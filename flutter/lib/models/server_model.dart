@@ -411,7 +411,9 @@ class ServerModel with ChangeNotifier {
           onCancel: close,
         );
       });
+        if (res == true) {
         startService();
+      }
     }
   }
 
