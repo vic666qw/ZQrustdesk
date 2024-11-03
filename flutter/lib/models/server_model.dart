@@ -386,7 +386,7 @@ class ServerModel with ChangeNotifier {
       }
     } else {
   await checkRequestNotificationPermission();
-  if (bind.mainGetLocalOption(key: kOptionDisableFloatingWindow) != Y) {
+  const String Y = 'Y'; if (bind.mainGetLocalOption(key: kOptionDisableFloatingWindow) != Y) { // 
     await checkFloatingWindowPermission();
   }
   if (!await AndroidPermissionManager.check(kManageExternalStorage)) {
