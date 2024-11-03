@@ -321,45 +321,6 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
     ];
     final List<AbstractSettingsTile> shareScreenTiles = [
       SettingsTile.switchTile(
-        title: Text(translate('Deny LAN discovery')),
-        initialValue: _denyLANDiscovery,
-        onToggle: isOptionFixed(kOptionEnableLanDiscovery)
-            ? null
-            : (v) async {
-                await bind.mainSetOption(
-                    key: kOptionEnableLanDiscovery,
-                    value: bool2option(kOptionEnableLanDiscovery, !v));
-                final newValue = !option2bool(kOptionEnableLanDiscovery,
-                    await bind.mainGetOption(key: kOptionEnableLanDiscovery));
-                setState(() {
-                  _denyLANDiscovery = newValue;
-                });
-              },
-      ),
-      SettingsTile.switchTile(
-        title: Row(children: [
-          Expanded(child: Text(translate('Use IP Whitelisting'))),
-          Offstage(
-                  offstage: !_onlyWhiteList,
-                  child: const Icon(Icons.warning_amber_rounded,
-                      color: Color.fromARGB(255, 255, 204, 0)))
-              .marginOnly(left: 5)
-        ]),
-        initialValue: _onlyWhiteList,
-        onToggle: (_) async {
-          update() async {
-            final onlyWhiteList = whitelistNotEmpty();
-            if (onlyWhiteList != _onlyWhiteList) {
-              setState(() {
-                _onlyWhiteList = onlyWhiteList;
-              });
-            }
-          }
-
-          changeWhiteList(callback: update);
-        },
-      ),
-      SettingsTile.switchTile(
         title: Text('${translate('Adaptive bitrate')} (beta)'),
         initialValue: _enableAbr,
         onToggle: isOptionFixed(kOptionEnableAbr)
@@ -369,20 +330,6 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
                 final newValue = await mainGetBoolOption(kOptionEnableAbr);
                 setState(() {
                   _enableAbr = newValue;
-                });
-              },
-      ),
-      SettingsTile.switchTile(
-        title: Text(translate('Enable recording session')),
-        initialValue: _enableRecordSession,
-        onToggle: isOptionFixed(kOptionEnableRecordSession)
-            ? null
-            : (v) async {
-                await mainSetBoolOption(kOptionEnableRecordSession, v);
-                final newValue =
-                    await mainGetBoolOption(kOptionEnableRecordSession);
-                setState(() {
-                  _enableRecordSession = newValue;
                 });
               },
       ),
@@ -672,7 +619,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
                 title: Text(translate("Version: ") + version),
                 value: Padding(
                   padding: EdgeInsets.symmetric(vertical: 8),
-                  child: Text('http://www.scysdl.com',
+                  child: Text('远程控制定制联系微信“Haisong-8',
                       style: TextStyle(
                         decoration: TextDecoration.underline,
                       )),
