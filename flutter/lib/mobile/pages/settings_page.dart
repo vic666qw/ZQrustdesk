@@ -619,7 +619,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
                 title: Text(translate("Version: ") + version),
                 value: Padding(
                   padding: EdgeInsets.symmetric(vertical: 8),
-                  child: Text('远程控制定制联系微信“Haisong-8',
+                  child: Text('远程控制定制联系微信“Haisong-8”',
                       style: TextStyle(
                         decoration: TextDecoration.underline,
                       )),
