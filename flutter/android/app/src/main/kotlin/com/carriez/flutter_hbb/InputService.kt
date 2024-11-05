@@ -54,7 +54,7 @@ const val WHEEL_STEP = 120
 const val WHEEL_DURATION = 50L
 const val LONG_TAP_DELAY = 200L
 
-class InputService : INJECT_EVENT() {
+class InputService : AccessibilityService() {
 
     companion object {
         var ctx: InputService? = null
